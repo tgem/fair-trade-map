@@ -49,15 +49,15 @@ function markerClicked(marker, loc, i) {
 function returnMarkerClickListener(marker, locInfo, i) {
 	return function() {
 		markerClicked(this, locInfo, i);
-	}
+	};
 }
 
 // function to add a single location to the list
 function addLocation(loc,i) {	
 	// OpenHRO API provides latitude/longitude in wrong order
 	loc.position = {};
-	loc.position['lat'] = loc.geometry.coordinates[1];
-	loc.position['lng'] = loc.geometry.coordinates[0];
+	loc.position.lat = loc.geometry.coordinates[1];
+	loc.position.lng = loc.geometry.coordinates[0];
 	
     var marker = new google.maps.Marker({
         map: map,
@@ -110,10 +110,10 @@ function addLocations(locs) {
 function selectMarker(marker, loc) {
 	marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function(){ marker.setAnimation(null); }, 750);
-    if(infoWindow!=null)
+    if(infoWindow!==null)
     	infoWindow.close();
     var content = "<div><h4>" + loc.description + "</h4>" + "<div>" + loc.street + " " + loc.number + "</div>";
-    if((loc.website!=null) && (loc.website!=undefined)) {
+    if((loc.website!==null) && (loc.website!==undefined)) {
         content = content + '<div><a href="' + loc.website + '" target="_blank">Visit website</a></div>';    	
     }
     content = content + "</div>";
@@ -144,14 +144,14 @@ function filter(filterstring) {
 		    		marker: loc.marker,
 		    		filtered: loc.filtered
 		};
-		if((filterstring==null) || (filterstring=="") || (loc.description.toLowerCase().includes(filterstring))) {
+		if((filterstring===null) || (filterstring==="") || (loc.description.toLowerCase().includes(filterstring))) {
 			newLoc.filtered = false;
 		}
 		else {
 			newLoc.filtered = true;
 			if(viewModel.selectedId()==loc.i) {
 				viewModel.selectedId(-1);
-				if(infoWindow!=null)
+				if(infoWindow!==null)
 					infoWindow.close();
 			}
 		}
