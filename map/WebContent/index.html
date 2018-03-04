@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Fair Trade Map</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h3>Places that offer fair trade products in and around Rostock</h3>
+		</div>
+		<div class="row header">
+			<div class="col-md-4">
+				<div>
+       			<input id="filter" name="filter"></input>
+				</div>
+				<div id="loclist" data-bind="foreach: locations">
+					<div class="loc btn" data-bind="text: description, css: { selected: i==$parent.selectedId(), 'd-none': filtered}, click: $parent.selectListEntry"></div>
+				</div>
+			</div>
+			<div class="col-md-8">
+			      <div id="map">
+ 		          </div>
+			</div>
+		</div>
+		<div class="row footer">
+		Map provided by Google and data provided by the &nbsp;<a href="https://www.opendata-hro.de/dataset/fair-trade" target="_blank">open data portal</a>&nbsp; of the city of Rostock.
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+ 	<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCQLJXxCMnS-DESDcBap4gxHv2AuJCXqvs&language=en"></script>
+ 	<script src="js/main.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>
