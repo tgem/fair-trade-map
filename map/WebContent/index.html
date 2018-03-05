@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Fair Trade Map</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -13,17 +13,20 @@
 			<h3>Places that offer fair trade products in and around Rostock</h3>
 		</div>
 		<div class="row header">
-			<div class="col-md-4">
+			<div class="col-md-4" data-bind="css: {'d-none': mapFailed}">
 				<div>
-       			<input id="filter" name="filter"></input>
+       				<input class="filter" name="filter" data-bind="textInput: filterString, event: {keyup: filterChange}">
 				</div>
-				<div id="loclist" data-bind="foreach: locations">
+				<div class="loclist" data-bind="foreach: locations">
 					<div class="loc btn" data-bind="text: description, css: { selected: i==$parent.selectedId(), 'd-none': filtered}, click: $parent.selectListEntry"></div>
 				</div>
 			</div>
 			<div class="col-md-8">
-			      <div id="map">
- 		          </div>
+				<div data-bind="css: {'d-none': !mapFailed()}">
+					We regret that we currently cannot access the Google Maps API and are therefore unable to provide this service. Please consider reloading this page at a later time.
+				</div>
+			    <div id="map" class="map">
+ 		        </div>
 			</div>
 		</div>
 		<div class="row footer">
@@ -32,9 +35,9 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
- 	<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCQLJXxCMnS-DESDcBap4gxHv2AuJCXqvs&language=en"></script>
  	<script src="js/main.js"></script>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+ 	<script async src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCQLJXxCMnS-DESDcBap4gxHv2AuJCXqvs&language=en&callback=initializeMap" onerror="mapFailure()"></script>
 </body>
 </html>

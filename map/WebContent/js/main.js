@@ -1,6 +1,6 @@
 var map;    
 var bounds;
-var infoWindow;
+var infoWindow = null;
 
 // creates the map once map script from Google is loaded
 function initializeMap() {
@@ -16,8 +16,6 @@ function initializeMap() {
   $.ajax({url: "https://geo.sv.rostock.de/download/opendata/fair-trade/fair-trade.json", success: locationsLoaded, error:noLocationsAvailable});
  
 }
-
-window.addEventListener('load', initializeMap);
 
 // on successful call to OpenData api, add loaded locations to list
 function locationsLoaded(result) {
@@ -37,6 +35,11 @@ function noLocationsAvailable(result) {
 			]};
 	addLocations(defaultLocations.features);
 	alert("We have been unable to load data from the open data portal of the city of Rostock. Therefore, our list of locations may be incomplete or outdated. Please consider reloading the page at a later time.");
+}
+
+function mapFailure() {
+	viewModel.mapFailed(true);
+	alert("We have been unable to load the city map from Google Maps and are therefore currently unable to provide our service. Please consider reloading the page at a later time.");
 }
 
 // event handler function for click on marker
@@ -97,12 +100,6 @@ function addLocations(locs) {
     
     map.fitBounds(bounds);
 
-	$("#filter").keyup(function(event) {
-	    if (event.keyCode === 13) {
-	       filter($("#filter").val());
-	    }
-	});
-
 }
 
 // function for selecting a marker
@@ -127,6 +124,14 @@ function selectMarker(marker, loc) {
 function selectListEntry(location) {
 	viewModel.selectedId(location.i);
 	selectMarker(location.marker, location);
+}
+
+// event handler for key press in input field, triggers filtering only on enter key
+function filterChange(data, event) {
+    if (event.keyCode === 13) {
+	       filter(viewModel.filterString());
+	    }
+	
 }
 
 // event handler for a confirmed change in the filter string
@@ -171,7 +176,10 @@ function filter(filterstring) {
 var viewModel = {
 	    selectedId: ko.observable(-1),
 	    locations: ko.observableArray(),
-	    selectListEntry: selectListEntry
+	    mapFailed: ko.observable(false),
+	    filterString: ko.observable(""),
+	    selectListEntry: selectListEntry,
+	    filterChange: filterChange
 	};
 
 ko.applyBindings(viewModel);
